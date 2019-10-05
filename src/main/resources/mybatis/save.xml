@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.mapper.SaveMapper">
+    <insert id="saveStorage" parameterType="com.entity.Storage">
+        insert into yp_storage
+        (
+        user_id,
+        area_id,
+        start_time,
+        ending_time,
+        package_id,
+        storage_type
+        )
+        values
+        (
+        #{userId},
+        #{areaId},
+        #{startTime},
+        #{endingTime},
+        #{packageId},
+        #{storageType}
+        )
+        <selectKey resultType="java.lang.Integer" keyProperty="id" >
+            SELECT @@IDENTITY AS Id
+        </selectKey>
+    </insert>
+
+    <insert id="saveSending" parameterType="com.entity.Sending">
+        insert into yp_sending
+        (
+        user_id,
+        area_id,
+        sending_address_id,
+        sending_type,
+        courier_number,
+        addressee_name,
+        addressee_tel
+        )
+        values
+        (
+        #{userId},
+        #{areaId},
+        #{sending_addressId},
+        #{sendingType},
+        #{courierNumber},
+        #{addresseeName},
+        #{addresseeTel}
+        )
+        <selectKey resultType="java.lang.Integer" keyProperty="id" >
+            SELECT @@IDENTITY AS Id
+        </selectKey>
+    </insert>
+
+    <select id="findArea" resultType="com.entity.Area">
+        select * from yp_area;
+    </select>
+
+    <select id="findPackage" parameterType="java.lang.Integer" resultType="com.entity.Package">
+        select * from yp_package where area_id = #{areaId}
+    </select>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.mapper.AdminMapper">
+	<resultMap id="storageInfo" type="com.entity.dto.Admin.GetStorageDTO">
+		<result column="startTime" property="startTime"/>
+		<result column="endingTime" property="endingTime"/>
+		<result column="name" property="name"/>
+		<result column="address" property="address"/>
+	</resultMap>
+    <select id="getStorage" resultMap="storageInfo">
+        SELECT
+			yp_storage.start_time startTime,
+			yp_storage.ending_time endingTime,
+			yp_user. NAME,
+			yp_area.address,
+			yp_storage.storage_type,
+			yp_area.address
+		FROM
+			yp_storage,
+			yp_area,
+			yp_user,
+			yp_administrator
+		WHERE
+			yp_administrator.id = #{arg0}
+		AND yp_storage.area_id = yp_area.id
+		AND yp_storage.user_id = yp_user.id
+		AND yp_administrator.area_id = yp_storage.area_id
+    </select>
+</mapper>
